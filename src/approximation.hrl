@@ -1,0 +1,2 @@
+-record(point, {x, y}).
+-record(config, {step, window, file, methods}).
