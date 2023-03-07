@@ -78,24 +78,6 @@ parse_args(Config, [Arg, Value | Args], PrinterPid) ->
     _ -> PrinterPid ! {print_message, "Invalid argument."}
   end.
 
-start() ->
-  File = init:get_argument("file"),
-  Methods = init:get_argument("methods"),
-  Params = case File of
-             undefined -> case Methods of
-                            undefined -> ["-step", init:get_argument("step"), "-window", init:get_argument("window")];
-                            Value ->
-                              ["-step", init:get_argument("step"), "-window", init:get_argument("window"), "-methods", Value]
-                          end;
-             FileValue -> case Methods of
-                            undefined ->
-                              ["-step", init:get_argument("step"), "-window", init:get_argument("window"), "-file", init:get_argument("file")];
-                            Value ->
-                              ["-step", init:get_argument("step"), "-window", init:get_argument("window"), "-methods", Value, "-file", FileValue]
-                          end
-           end,
-  start([], Params).
-
 start(_StartType, _StartArgs) ->
   PrinterPid = create_console_printer(),
   Config = parse_args(init_default_config(), _StartArgs, PrinterPid),
@@ -110,6 +92,7 @@ start(_StartType, _StartArgs) ->
               fun(FirstPoint, SecondPoint) -> FirstPoint#point.x =< SecondPoint#point.x end,
               Points
             ),
+          io:format("~w\n", [SortedPoints]),
           input_stream_handler(Approximators, PrinterPid, SortedPoints, Config);
 
         {error, _} ->
