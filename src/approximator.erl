@@ -23,6 +23,5 @@ approximator(ApproximationMethod) ->
       Solution = ApproximationMethod(Points, NewXValues),
       SenderPid ! {ok, Solution},
       approximator(ApproximationMethod);
-
     close -> closed
   end.
