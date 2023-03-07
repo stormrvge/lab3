@@ -79,7 +79,6 @@ parse_args(Config, [Arg, Value | Args], PrinterPid) ->
   end.
 
 start() ->
-  Args = init:get_arguments(),
   File = init:get_argument("file"),
   Methods = init:get_argument("methods"),
   Params = case File of
