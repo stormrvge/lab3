@@ -2,7 +2,7 @@
 
 -behaviour(application).
 
--export([start/0, start/2, stop/1]).
+-export([start/2, stop/1]).
 
 -include("approximation.hrl").
 
